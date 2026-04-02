@@ -26,7 +26,7 @@ class _VaultScreenState extends State<VaultScreen> {
         content: TextField(
           controller: pinController,
           obscureText: true,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: 'PIN Giriniz',
             helperText: currentPin == '1234' ? 'Varsayılan PIN: 1234' : null,
           ),
