@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/vault_provider.dart';
+import '../providers/theme_provider.dart';
 import '../models/password_entry.dart';
 
 class VaultScreen extends StatefulWidget {
@@ -147,7 +148,22 @@ class _VaultScreenState extends State<VaultScreen> {
   Widget build(BuildContext context) {
     if (!_isAuthenticated) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Şifre Kasası')),
+        appBar: AppBar(
+          title: const Text('Şifre Kasası'),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Theme.of(context).brightness == Brightness.dark
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+              ),
+              onPressed: () {
+                final isDark = Theme.of(context).brightness == Brightness.dark;
+                context.read<ThemeProvider>().toggleTheme(!isDark);
+              },
+            ),
+          ],
+        ),
         body: Center(
           child: ElevatedButton.icon(
             onPressed: _authenticate,
@@ -162,6 +178,17 @@ class _VaultScreenState extends State<VaultScreen> {
       appBar: AppBar(
         title: const Text('Şifre Kasası'),
         actions: [
+          IconButton(
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              context.read<ThemeProvider>().toggleTheme(!isDark);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: _showUpdatePinDialog,

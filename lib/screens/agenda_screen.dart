@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:provider/provider.dart';
 import '../providers/agenda_provider.dart';
+import '../providers/theme_provider.dart';
 import '../models/task.dart';
+import '../widgets/bulk_add_task_dialog.dart';
 
 class AgendaScreen extends StatefulWidget {
   const AgendaScreen({super.key});
@@ -59,7 +61,32 @@ class _AgendaScreenState extends State<AgendaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajandam')),
+      appBar: AppBar(
+        title: const Text('Ajandam'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.library_add),
+            tooltip: 'Toplu Görev Ekle',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const BulkAddTaskDialog(),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              context.read<ThemeProvider>().toggleTheme(!isDark);
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           TableCalendar(

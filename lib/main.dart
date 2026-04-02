@@ -5,6 +5,7 @@ import 'providers/agenda_provider.dart';
 import 'providers/vault_provider.dart';
 import 'providers/news_provider.dart';
 import 'providers/weather_provider.dart';
+import 'providers/theme_provider.dart';
 
 void main() {
   runApp(
@@ -14,6 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => VaultProvider()),
         ChangeNotifierProvider(create: (_) => NewsProvider()),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -29,10 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'Kişisel Ajanda',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueGrey,
-          primary: Colors.blueGrey,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
           centerTitle: true,
@@ -40,6 +39,16 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
+      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueGrey,
+          brightness: Brightness.dark,
+        ),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+        ),
+      ),
+      themeMode: context.watch<ThemeProvider>().themeMode,
       home: const HomeScreen(),
     );
   }
