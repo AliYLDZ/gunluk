@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'agenda_screen.dart';
 import 'vault_screen.dart';
-import 'weather_screen.dart';
+import 'step_counter_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     AgendaScreen(),
     VaultScreen(),
-    WeatherScreen(),
+    StepCounterScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Kasa',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wb_sunny),
-            label: 'Hava Durumu',
+            icon: Icon(Icons.directions_walk),
+            label: 'Adım Sayar',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'providers/agenda_provider.dart';
 import 'providers/vault_provider.dart';
-import 'providers/weather_provider.dart';
+import 'providers/step_provider.dart';
 import 'providers/theme_provider.dart';
 
 void main() {
@@ -12,7 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AgendaProvider()),
         ChangeNotifierProvider(create: (_) => VaultProvider()),
-        ChangeNotifierProvider(create: (_) => WeatherProvider()),
+        ChangeNotifierProvider(create: (_) => StepProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
