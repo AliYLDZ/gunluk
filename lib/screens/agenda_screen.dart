@@ -119,12 +119,15 @@ class _AgendaScreenState extends State<AgendaScreen> {
                     return ListTile(
                       leading: Checkbox(
                         value: task.isDone,
-                        onChanged: (_) => provider.toggleTaskStatus(task.id),
+                        onChanged: provider.isTaskInFuture(task)
+                            ? null
+                            : (_) => provider.toggleTaskStatus(task.id),
                       ),
                       title: Text(
                         task.title,
                         style: TextStyle(
                           decoration: task.isDone ? TextDecoration.lineThrough : null,
+                          color: provider.isTaskInFuture(task) ? Colors.grey : null,
                         ),
                       ),
                       trailing: IconButton(

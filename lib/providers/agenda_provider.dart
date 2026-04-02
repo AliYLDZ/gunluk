@@ -37,9 +37,17 @@ class AgendaProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool isTaskInFuture(Task task) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final taskDate = DateTime(task.date.year, task.date.month, task.date.day);
+    return taskDate.isAfter(today);
+  }
+
   void toggleTaskStatus(String id) {
     final index = _tasks.indexWhere((task) => task.id == id);
     if (index != -1) {
+      if (isTaskInFuture(_tasks[index])) return;
       _tasks[index].isDone = !_tasks[index].isDone;
       notifyListeners();
     }
