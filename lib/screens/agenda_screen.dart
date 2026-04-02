@@ -175,9 +175,10 @@ class _AgendaScreenState extends State<AgendaScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddTaskDialog,
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text('Görev Ekle'),
       ),
     );
   }

@@ -238,9 +238,10 @@ class _VaultScreenState extends State<VaultScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddEntryDialog,
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text('Şifre Ekle'),
       ),
     );
   }
