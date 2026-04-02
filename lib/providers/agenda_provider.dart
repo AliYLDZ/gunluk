@@ -20,6 +20,7 @@ class AgendaProvider with ChangeNotifier {
   }
 
   void addBulkTasks(String title, List<int> selectedWeekdays, DateTime endDate) {
+    String groupId = 'group_${DateTime.now().millisecondsSinceEpoch}';
     DateTime current = DateTime.now();
     current = DateTime(current.year, current.month, current.day);
     final normalizedEndDate = DateTime(endDate.year, endDate.month, endDate.day);
@@ -30,6 +31,7 @@ class AgendaProvider with ChangeNotifier {
           id: '${DateTime.now().millisecondsSinceEpoch}_${current.millisecondsSinceEpoch}',
           title: title,
           date: current,
+          groupId: groupId,
         ));
       }
       current = current.add(const Duration(days: 1));
@@ -55,6 +57,17 @@ class AgendaProvider with ChangeNotifier {
 
   void deleteTask(String id) {
     _tasks.removeWhere((task) => task.id == id);
+    notifyListeners();
+  }
+
+  void deleteTaskGroup(String groupId) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    
+    _tasks.removeWhere((task) => 
+      task.groupId == groupId && 
+      (task.date.isAfter(today) || (task.date.year == today.year && task.date.month == today.month && task.date.day == today.day))
+    );
     notifyListeners();
   }
 }

@@ -4,6 +4,7 @@ class Task {
   final String description;
   final DateTime date;
   bool isDone;
+  final String? groupId;
 
   Task({
     required this.id,
@@ -11,5 +12,6 @@ class Task {
     this.description = '',
     required this.date,
     this.isDone = false,
+    this.groupId,
   });
 }

@@ -132,7 +132,40 @@ class _AgendaScreenState extends State<AgendaScreen> {
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => provider.deleteTask(task.id),
+                        onPressed: () {
+                          if (task.groupId != null) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Görevi Sil'),
+                                content: const Text(
+                                    'Bu görev toplu bir işlemin parçası. Nasıl silmek istersiniz?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      provider.deleteTask(task.id);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Sadece Bunu Sil'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      provider.deleteTaskGroup(task.groupId!);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Gelecekteki Tüm Tekrarları Sil'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('İptal'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            provider.deleteTask(task.id);
+                          }
+                        },
                       ),
                     );
                   },
