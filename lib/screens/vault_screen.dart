@@ -28,7 +28,7 @@ class _VaultScreenState extends State<VaultScreen> {
           obscureText: true,
           decoration: const InputDecoration(
             hintText: 'PIN Giriniz',
-            helperText: 'Varsayılan PIN: 1234',
+            helperText: currentPin == '1234' ? 'Varsayılan PIN: 1234' : null,
           ),
           keyboardType: TextInputType.number,
         ),
