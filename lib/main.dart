@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'providers/agenda_provider.dart';
 import 'providers/vault_provider.dart';
-import 'providers/news_provider.dart';
 import 'providers/weather_provider.dart';
 import 'providers/theme_provider.dart';
 
@@ -13,7 +12,6 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AgendaProvider()),
         ChangeNotifierProvider(create: (_) => VaultProvider()),
-        ChangeNotifierProvider(create: (_) => NewsProvider()),
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],

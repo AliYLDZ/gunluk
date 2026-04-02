@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/weather_provider.dart';
+import '../providers/theme_provider.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -28,6 +29,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
       appBar: AppBar(
         title: const Text('Hava Durumu ve Saatler'),
         actions: [
+          IconButton(
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              context.read<ThemeProvider>().toggleTheme(!isDark);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.my_location),
             onPressed: () => context.read<WeatherProvider>().fetchWeatherByLocation(),
