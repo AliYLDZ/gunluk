@@ -36,7 +36,10 @@ class WeatherProvider with ChangeNotifier {
         }
       }
 
-      Position position = await Geolocator.getCurrentPosition();
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low,
+        timeLimit: const Duration(seconds: 5),
+      );
       final url = 'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey&units=metric&lang=tr';
       
       await _getWeatherData(url);
@@ -65,7 +68,11 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<void> _getWeatherData(String url) async {
-    final response = await http.get(Uri.parse(url));
+    final response = await http
+        .get(Uri.parse(url))
+        .timeout(const Duration(seconds: 10), onTimeout: () {
+      throw 'İnternet bağlantısı çok yavaş, lütfen tekrar deneyin.';
+    });
     if (response.statusCode == 200) {
       _weather = WeatherData.fromJson(json.decode(response.body));
     } else {
