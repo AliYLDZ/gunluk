@@ -14,10 +14,28 @@ class VaultScreen extends StatefulWidget {
 class _VaultScreenState extends State<VaultScreen> {
   bool _isAuthenticated = false;
 
-  void _authenticate() {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _authenticateWithBiometrics();
+    });
+  }
+
+  Future<void> _authenticateWithBiometrics() async {
+    final provider = context.read<VaultProvider>();
+    final authenticated = await provider.authenticate();
+    if (authenticated) {
+      if (mounted) setState(() => _isAuthenticated = true);
+    } else {
+      if (mounted) _showPinDialog();
+    }
+  }
+
+  void _showPinDialog() {
     final pinController = TextEditingController();
     final currentPin = context.read<VaultProvider>().vaultPin;
-    
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -46,12 +64,20 @@ class _VaultScreenState extends State<VaultScreen> {
             },
             child: const Text('Giriş'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _authenticateWithBiometrics();
+            },
+            child: const Icon(Icons.fingerprint),
+          ),
         ],
       ),
     );
   }
 
   void _showUpdatePinDialog() {
+// ... (rest of the code remains same)
     final oldPinController = TextEditingController();
     final newPinController = TextEditingController();
     final currentPin = context.read<VaultProvider>().vaultPin;
@@ -167,7 +193,7 @@ class _VaultScreenState extends State<VaultScreen> {
         ),
         body: Center(
           child: ElevatedButton.icon(
-            onPressed: _authenticate,
+            onPressed: _authenticateWithBiometrics,
             icon: const Icon(Icons.lock_open),
             label: const Text('Kasanın Kilidini Aç'),
           ),
